@@ -1,7 +1,4 @@
 
-// TODO: 
-// file auto upload and generating http img url
-
 var _gaq = _gaq || [];
 _gaq.push(['_setAccount', 'UA-37104103-2']);
 _gaq.push(['_trackPageview']);
@@ -123,7 +120,7 @@ $(function(){
 
                                 oOutputPath.removeClass('hide');
 
-                                // copy markdown img reference to clipboard
+                                // copy img reference to clipboard
                                 // oOutputPathInput.val('![](' + rsp.info.url  + ')');
                                 oOutputPathInput.val(rsp.info.url);
                                 oOutputPathInput.focus();
@@ -140,7 +137,7 @@ $(function(){
 
                     }
 
-                    // 进度条：<progress min="0" max="100" value="0">0% complete</progress>
+                    // Progress Bar：<progress min="0" max="100" value="0">0% complete</progress>
                     // var progress = $(progress)
                     xhr.upload.onprogress = function(e){
                         if(e.lengthComputable) {
@@ -152,18 +149,6 @@ $(function(){
 
                     xhr.send(f);
 
-                    // $.ajax({
-                    //     url: 'http://markimage.duapp.com/do.php?action=htmlupload',
-                    //     type: 'POST',
-                    //     processData: false,
-                    //     data: f,
-                    //     success: function(rsp) {
-                    //         console.log('success' + rsp);
-                    //     },
-                    //     error: function(rsp) {
-                    //         console.log('error' + rsp);
-                    //     }
-                    // })
                 }
 
             };

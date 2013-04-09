@@ -1,4 +1,4 @@
-var dev = true;
+var dev = location.href.indexOf('noahludev');
 
 function injectDom(){
     var oInput = $('<input type="text" id="J-noahlu-input" value="" placeholder="">')

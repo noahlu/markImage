@@ -39,6 +39,6 @@
     "48":"icon.png",            
     "128":"icon.png"            
   },
-  "options_page": "options.htm",    
+  // "options_page": "options.htm",    
   "content_security_policy": "script-src 'self' 'unsafe-eval' https://ssl.google-analytics.com;  object-src 'self'"
 }
