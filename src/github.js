@@ -11,7 +11,7 @@ function injectDom(){
         width: '90%',
         padding: '5px 10px'
     })
-    .attr('placeholder', 'Click here and Paste Your Image. (Ctrl/Cmd + V)');
+    .attr('placeholder', 'Click here and paste your image. (Ctrl/Cmd + V)');
 
     oBtn.css({
         marginTop: '10px'
@@ -24,15 +24,13 @@ function injectDom(){
 
     oInput.appendTo(oContainer);
     oBtn.appendTo(oContainer);
-
-    return oInput;
 }
 
 function injectScript(script){
     var oScript = $('<script></script>');
 
     oScript.html('(' + script + ')()');
-    oScript.appendTo($(document.head));
+    oScript.appendTo($('head'));
 }
 
 function funcWrapper(){
@@ -55,53 +53,24 @@ function funcWrapper(){
 
     function oInputUpload() {
 
+        // $.ajax compress request message unexpectly, here we use xhr.
         var xhr = new XMLHttpRequest();
         xhr.open('POST', 'https://github.com/upload/policies/asset', true);
         xhr.onreadystatechange = function(){
+
             if(xhr.readyState === 4) {
 
                 if(xhr.status >= 200 && xhr.status <300) {
                     console.log('success');
                     var rsp = JSON.parse(xhr.responseText);
-                    var imgUrl = rsp.asset.href;
 
-                    // upload to aws
-                    var xhr_aws = new XMLHttpRequest();
-                    xhr_aws.open('POST', rsp.upload_url);
-
-                    xhr_aws.onreadystatechange = function() {
-                        if(xhr_aws.readyState === 4) {
-                            if(xhr_aws.status >= 200 &&  xhr_aws.status < 300 ) {
-                                console.log('upload success')
-                                oInput.val(imgUrl ? imgUrl : 'Sorry, Upload Error Occured~');
-                                pushImageList(imgUrl);
-
-                            }
-                        }
-                    }
-
-                    xhr_aws.upload.onprogress = function(e){
-                        if(e.lengthComputable) {
-                            oInput.val('Progress: ' + (e.loaded / e.total).toFixed(2) * 100 + '%');
-                            if (e.loaded == e.total) {
-                                oInput.val('Generating Image Url...');
-                            }
-                        }
-                    }
-
-                    var f = new FormData();
-                    for (var key in rsp.form){
-                        f.append(key, rsp.form[key]);
-                    }
-                    f.append('file', oImgBlob);
-
-                    xhr_aws.send(f);
+                    // upload image to aws
+                    awsUpload(rsp);
 
                 } else {
-                    console.log('error')
+                    console.log('Error!')
                 }
             }
-
         }
 
         xhr.setRequestHeader('X-CSRF-Token', document.querySelector('meta[name="csrf-token"]').content);
@@ -113,7 +82,43 @@ function funcWrapper(){
         f.append('team_id','');
 
         xhr.send(f);
+    }
 
+    function awsUpload(awsProp){
+        var xhr = new XMLHttpRequest();
+        var imgUrl = awsProp.asset.href;
+        var f = new FormData();
+
+        xhr.open('POST', awsProp.upload_url);
+
+        xhr.onreadystatechange = function() {
+            if(xhr.readyState === 4) {
+                if(xhr.status >= 200 &&  xhr.status < 300 ) {
+                    console.log('upload success')
+                    oInput.val(imgUrl ? imgUrl : 'Sorry, Upload Error Occured~');
+                    pushImageList(imgUrl);
+
+                }
+            }
+        }
+
+        // show upload progress
+        xhr.upload.onprogress = function(e){
+            if(e.lengthComputable) {
+                oInput.val('Progress: ' + (e.loaded / e.total).toFixed(2) * 100 + '%');
+                if (e.loaded == e.total) {
+                    oInput.val('Generating Image Url...');
+                }
+            }
+        }
+
+        // push upload messages body into Form Object
+        for (var key in awsProp.form){
+            f.append(key, awsProp.form[key]);
+        }
+        f.append('file', oImgBlob);
+
+        xhr.send(f);
     }
 
     function pushImageList(imageurl){
