@@ -1,20 +1,22 @@
+var dev = true;
+
 function injectDom(){
-    var oInput = $('<input type="text" id="J-noahlu-input" value="" placeholder="Paste Your Image Here. (Ctrl/Cmd + V)">')
-    var oBtn = $('<a href="" target="_blank" class="minibutton dark-grey" id="J-noahlu-btn" >图片历史</a>')
+    var oInput = $('<input type="text" id="J-noahlu-input" value="" placeholder="">')
+    var oBtn = $('<a href="" target="_blank" class="minibutton dark-grey" id="J-noahlu-btn" >History</a>')
     var oContainer = document.querySelectorAll('.container')[1];
 
     oInput.css({
         marginTop: '10px',
         marginRight: '10px',
-        width: '80%',
-        padding: '5px'
-    });
+        width: '90%',
+        padding: '5px 10px'
+    })
+    .attr('placeholder', 'Click here and Paste Your Image. (Ctrl/Cmd + V)');
 
     oBtn.css({
         marginTop: '10px'
     })
 
-    var dev = true;
     dev ?  
         oBtn.attr('href', 'chrome-extension://gonjpgblmfoejljhefjmhefdpblmcaen/history.htm') : 
         oBtn.attr('href', 'chrome-extension://hpbancfjplieholghonkiopcmhlplnfh/history.htm');
@@ -33,23 +35,23 @@ function injectScript(script){
     oScript.appendTo($(document.head));
 }
 
-function funcToInject(){
+function funcWrapper(){
 
-    var oInput = document.getElementById('J-noahlu-input');
+    var oInput = $('#J-noahlu-input');
     var oImgBlob;
 
-    oInput.onpaste = function(e){
-        var items = e.clipboardData.items;
+    oInput.on('paste', function(e){
+        var items = e.originalEvent.clipboardData.items;
         if(items[0].type == 'image/png') {
             console.log(oImgBlob);
 
             oImgBlob = items[0].getAsFile();
-            oInput.value = '图片准备上传';
+            oInput.val('Starting Upload...');
             oInputUpload();
         }
 
         console.log(items)
-    };
+    });
 
     function oInputUpload() {
 
@@ -71,7 +73,7 @@ function funcToInject(){
                         if(xhr_aws.readyState === 4) {
                             if(xhr_aws.status >= 200 &&  xhr_aws.status < 300 ) {
                                 console.log('upload success')
-                                oInput.value = imgUrl ? imgUrl : '上传出错拉！';
+                                oInput.val(imgUrl ? imgUrl : 'Sorry, Upload Error Occured~');
                                 pushImageList(imgUrl);
 
                             }
@@ -80,9 +82,9 @@ function funcToInject(){
 
                     xhr_aws.upload.onprogress = function(e){
                         if(e.lengthComputable) {
-                            oInput.value = '进度：' + (e.loaded / e.total).toFixed(2) * 100 + '%';
+                            oInput.val('Progress: ' + (e.loaded / e.total).toFixed(2) * 100 + '%');
                             if (e.loaded == e.total) {
-                                oInput.value = '正在生成图片地址...';
+                                oInput.val('Generating Image Url...');
                             }
                         }
                     }
@@ -139,7 +141,7 @@ function funcToInject(){
 }
 
 injectDom();
-funcToInject(); // 用到chrome.extension接口，不能注入到页面
-// injectScript(funcToInject.toString());
 
-// console.log('MarkImage is in.');
+// funcWrapper has used chrome.extension api, cannt be injected into page!
+// injectScript(funcWrapper.toString());
+funcWrapper();

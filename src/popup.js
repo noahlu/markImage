@@ -124,7 +124,8 @@ $(function(){
                                 oOutputPath.removeClass('hide');
 
                                 // copy markdown img reference to clipboard
-                                oOutputPathInput.val('![](' + rsp.info.url  + ')');
+                                // oOutputPathInput.val('![](' + rsp.info.url  + ')');
+                                oOutputPathInput.val(rsp.info.url);
                                 oOutputPathInput.focus();
                                 oOutputPathInput.select();
                                 document.execCommand('copy');
