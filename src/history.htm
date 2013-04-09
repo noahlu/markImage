@@ -1,0 +1,35 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>图片历史</title>
+    <script type="text/javascript" src="lib/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="lib/handlebars.js"></script>
+    <script type="text/javascript" src="history.js"></script>
+    <style>
+    body{margin:0 auto; width: 900px;}
+    h1{text-align: center;border-bottom: 1px solid #999;padding-bottom: 10px}
+
+    #container ul,
+    #container li{list-style-type: none;}
+    .img{width: 300px;height: 100px;box-shadow: 1px 3px 6px 1px #CCC;border-radius: 5px}
+    .imgurl{width: 512px;height: 30px;line-height: 1em;margin-top: 35px;float: right;}
+    </style>
+</head>
+<body>
+    <h1>图片历史</h1>
+    <div id="container"></div>
+
+<script type="text/x-handlebars-template" id="template">
+<ul>
+    {{#each images}}
+    <li>
+        <img src="{{this}}" class="img" />
+        <input value="{{this}}" type="text" class="imgurl">
+    </li>
+    {{/each}}
+</ul>
+</script>
+
+</body>
+</html>

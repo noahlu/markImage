@@ -1,0 +1,58 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>Popup</title>
+<style type="text/css">
+body{width:400px;line-height: 1.5em;}
+img{border:1px dashed #aaa; padding:8px; max-width:350px;box-shadow: 4px 4px rgba(0,0,0,0.1);}
+h1{text-align:center;font-size:24px;line-height: 2em; border-bottom:1px solid red;}
+h1 b{color:red;}
+hr{color:#ccc; margin:5px 0;}
+.gray{color:gray;}
+
+.file-path{font-size: 13px;}
+.file-path-input{height: 18px;width: 350px;font-size: 12px; margin-bottom:10px;}
+.file-path-control{border-bottom:1px dotted #eee;}
+
+.output-path{text-align: center;margin-top: 20px;}
+.output-path p {color: red;}
+.output-path-input{width:300px;height:30px;line-height: 30px; font-size:14px; }
+
+.content{padding:10px;text-align: center;}
+
+.hide{display: none;}
+
+.edit .file-path{display: none;}
+.edit .file-path-input{display: block;}
+
+.unedit .file-path{display: inline-block;}
+.unedit .file-path-input{display: none;}
+</style>
+</head>
+<body>
+
+<h1><b>M</b>ark <b>I</b>mage</h1>
+<div class="edit file-path-control" id="J-filePathControl">
+    <p>
+        <span class="file-path gray">Download Path: </span>
+        <span id="J-filePathText" class="file-path"></span>
+    </p>
+    <p>
+        <span class="file-path-input">Input Your Chrome Default Download Path:</span>
+        <input type="text" id="J-filePathInput" class="file-path-input" placeholder="Default Download Path"/>
+    </p>
+</div>
+
+<div id="J-outputPath" class="hide output-path">
+    <input type="text" id="J-outputPathInput" class="output-path-input" /> 
+    <p>Copy Done!～</p>
+</div>
+
+<div id="J-content" class="content"></div>
+
+<script type="text/javascript" src="lib/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="popup.js"></script>
+
+</body>
+</html>
