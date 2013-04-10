@@ -3,7 +3,7 @@
 ![logo](https://raw.github.com/noahlu/markImage/master/resources/ico_128.png)
 
 ## What's Mark Image
-It's a chrome extension, help you upload/save images from clipboard.
+It's a chrome extension, helping you upload/save images from clipboard.
 
 ## How to use
 - Install the [extension](https://chrome.google.com/webstore/detail/mark-image/hpbancfjplieholghonkiopcmhlplnfh)
