@@ -3,7 +3,6 @@ var dev = location.href.indexOf('noahludev');
 function injectDom(){
     var oInput = $('<input type="text">');
     var oBtn = $('<a>History</a>');
-    var oStyle = $('<style>');
     var oContainer = document.querySelectorAll('.container')[1];
 
     oInput
