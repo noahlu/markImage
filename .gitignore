@@ -2,3 +2,5 @@
 *.DS_Store
 markimage.sublime-project
 markimage.sublime-workspace
+_*.htm
+_*.js

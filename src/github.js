@@ -1,21 +1,28 @@
 var dev = location.href.indexOf('noahludev');
 
 function injectDom(){
-    var oInput = $('<input type="text" id="J-noahlu-input" value="" placeholder="">')
-    var oBtn = $('<a href="" target="_blank" class="minibutton dark-grey" id="J-noahlu-btn" >History</a>')
+    var oInput = $('<input type="text">');
+    var oBtn = $('<a>History</a>');
+    var oStyle = $('<style>');
     var oContainer = document.querySelectorAll('.container')[1];
 
-    oInput.css({
-        marginTop: '10px',
-        marginRight: '10px',
-        width: '90%',
-        padding: '5px 10px'
-    })
-    .attr('placeholder', 'Click here and paste your image. (Ctrl/Cmd + V)');
+    oInput
+        .attr('id', 'J-noahlu-input')
+        .attr('placeholder', 'Click here and paste your image. (Ctrl/Cmd + V)')
+        .css({
+            marginTop: '10px',
+            marginRight: '10px',
+            width: '90%',
+            padding: '5px 10px'
+        });
 
-    oBtn.css({
-        marginTop: '10px'
-    })
+    oBtn
+        .attr('class', 'minibutton dark-grey')
+        .attr('id', 'J-noahlu-btn')
+        .attr('target', '_blank')
+        .css({
+            marginTop: '10px'
+        });
 
     dev > -1 ?  
         oBtn.attr('href', 'chrome-extension://gonjpgblmfoejljhefjmhefdpblmcaen/history.htm') : 
@@ -103,7 +110,7 @@ function funcWrapper(){
         }
 
         // show upload progress
-        xhr.upload.onprogress = function(e){
+        xhr.upload.onprogress = function(e) {
             if(e.lengthComputable) {
                 oInput.val('Progress: ' + (e.loaded / e.total).toFixed(2) * 100 + '%');
                 if (e.loaded == e.total) {
@@ -113,7 +120,7 @@ function funcWrapper(){
         }
 
         // push upload messages body into Form Object
-        for (var key in awsProp.form){
+        for(var key in awsProp.form) {
             f.append(key, awsProp.form[key]);
         }
         f.append('file', oImgBlob);
