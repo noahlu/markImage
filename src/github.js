@@ -17,7 +17,7 @@ function injectDom(){
         marginTop: '10px'
     })
 
-    dev ?  
+    dev > -1 ?  
         oBtn.attr('href', 'chrome-extension://gonjpgblmfoejljhefjmhefdpblmcaen/history.htm') : 
         oBtn.attr('href', 'chrome-extension://hpbancfjplieholghonkiopcmhlplnfh/history.htm');
 
